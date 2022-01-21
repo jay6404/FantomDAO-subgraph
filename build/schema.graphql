@@ -36,6 +36,14 @@ type ProtocolMetric @entity {
   treasuryFRAXMarketValue: BigDecimal!
   treasuryGOHMMarketValue: BigDecimal!
   currentAPY: BigDecimal!
+  runway2dot5k: BigDecimal
+  runway5k: BigDecimal
+  runway7dot5k: BigDecimal
+  runway10k: BigDecimal
+  runway20k: BigDecimal
+  runway50k: BigDecimal
+  runway70k: BigDecimal
+  runway100k: BigDecimal
   runwayCurrent: BigDecimal
   treasuryHecDaiPOL: BigDecimal!
   treasuryHecUsdcPOL: BigDecimal!
