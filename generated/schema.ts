@@ -431,6 +431,142 @@ export class ProtocolMetric extends Entity {
     this.set("currentAPY", Value.fromBigDecimal(value));
   }
 
+  get runway2dot5k(): BigDecimal | null {
+    let value = this.get("runway2dot5k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway2dot5k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway2dot5k");
+    } else {
+      this.set("runway2dot5k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway5k(): BigDecimal | null {
+    let value = this.get("runway5k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway5k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway5k");
+    } else {
+      this.set("runway5k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway7dot5k(): BigDecimal | null {
+    let value = this.get("runway7dot5k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway7dot5k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway7dot5k");
+    } else {
+      this.set("runway7dot5k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway10k(): BigDecimal | null {
+    let value = this.get("runway10k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway10k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway10k");
+    } else {
+      this.set("runway10k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway20k(): BigDecimal | null {
+    let value = this.get("runway20k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway20k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway20k");
+    } else {
+      this.set("runway20k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway50k(): BigDecimal | null {
+    let value = this.get("runway50k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway50k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway50k");
+    } else {
+      this.set("runway50k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway70k(): BigDecimal | null {
+    let value = this.get("runway70k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway70k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway70k");
+    } else {
+      this.set("runway70k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
+  get runway100k(): BigDecimal | null {
+    let value = this.get("runway100k");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway100k(value: BigDecimal | null) {
+    if (!value) {
+      this.unset("runway100k");
+    } else {
+      this.set("runway100k", Value.fromBigDecimal(<BigDecimal>value));
+    }
+  }
+
   get runwayCurrent(): BigDecimal | null {
     let value = this.get("runwayCurrent");
     if (!value || value.kind == ValueKind.NULL) {

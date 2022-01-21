@@ -309,19 +309,55 @@ function getAPY_Rebase(sHEC: BigDecimal, distributedHEC: BigDecimal): BigDecimal
     return [currentAPYdecimal, nextEpochRebase]
 }
 
-function getRunway(sHec: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDecimal {
+function getRunway(sHec: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDecimal[] {
     let runwayCurrent = BigDecimal.fromString("0")
-
+    let runway2dot5k = BigDecimal.fromString('0')
+    let runway5k = BigDecimal.fromString('0')
+    let runway7dot5k = BigDecimal.fromString('0')
+    let runway10k = BigDecimal.fromString('0')
+    let runway20k = BigDecimal.fromString('0')
+    let runway50k = BigDecimal.fromString('0')
+    let runway70k = BigDecimal.fromString('0')
+    let runway100k = BigDecimal.fromString('0')
     if (sHec.gt(BigDecimal.fromString("0")) && rfv.gt(BigDecimal.fromString("0")) && rebase.gt(BigDecimal.fromString("0"))) {
         let treasury_runway = parseFloat(rfv.div(sHec).toString())
-
+        let runway2dot5k_num =
+            Math.log(treasury_runway) / Math.log(1 + 0.0029438) / 3
+        let runway5k_num = Math.log(treasury_runway) / Math.log(1 + 0.003579) / 3
+        let runway7dot5k_num =
+            Math.log(treasury_runway) / Math.log(1 + 0.0039507) / 3
+        let runway10k_num = Math.log(treasury_runway) / Math.log(1 + 0.00421449) / 3
+        let runway20k_num = Math.log(treasury_runway) / Math.log(1 + 0.00485037) / 3
+        let runway50k_num = Math.log(treasury_runway) / Math.log(1 + 0.00569158) / 3
+        let runway70k_num = Math.log(treasury_runway) / Math.log(1 + 0.00600065) / 3
+        let runway100k_num =
+            Math.log(treasury_runway) / Math.log(1 + 0.00632839) / 3
         let nextEpochRebase_number = parseFloat(rebase.toString()) / 100
         let runwayCurrent_num = (Math.log(treasury_runway) / Math.log(1 + nextEpochRebase_number)) / 3;
 
+
+        runway2dot5k = BigDecimal.fromString(runway2dot5k_num.toString())
+        runway5k = BigDecimal.fromString(runway5k_num.toString())
+        runway7dot5k = BigDecimal.fromString(runway7dot5k_num.toString())
+        runway10k = BigDecimal.fromString(runway10k_num.toString())
+        runway20k = BigDecimal.fromString(runway20k_num.toString())
+        runway50k = BigDecimal.fromString(runway50k_num.toString())
+        runway70k = BigDecimal.fromString(runway70k_num.toString())
+        runway100k = BigDecimal.fromString(runway100k_num.toString())
         runwayCurrent = BigDecimal.fromString(runwayCurrent_num.toString())
     }
 
-    return runwayCurrent
+    return [
+        runway2dot5k,
+        runway5k,
+        runway7dot5k,
+        runway10k,
+        runway20k,
+        runway50k,
+        runway70k,
+        runway100k,
+        runwayCurrent
+    ]
 }
 
 
@@ -374,7 +410,21 @@ export function updateProtocolMetrics(blockNumber: BigInt, timestamp: BigInt): v
     pm.nextEpochRebase = apy_rebase[1]
 
     //Runway
-    pm.runwayCurrent = getRunway(pm.sHecCirculatingSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase)
+    // pm.runwayCurrent = getRunway(pm.sHecCirculatingSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase)
+    let runways = getRunway(
+        pm.sHecCirculatingSupply,
+        pm.treasuryRiskFreeValue,
+        pm.nextEpochRebase,
+      )
+      pm.runway2dot5k = runways[0]
+      pm.runway5k = runways[1]
+      pm.runway7dot5k = runways[2]
+      pm.runway10k = runways[3]
+      pm.runway20k = runways[4]
+      pm.runway50k = runways[5]
+      pm.runway70k = runways[6]
+      pm.runway100k = runways[7]
+      pm.runwayCurrent = runways[8]
 
     pm.save()
 }
