@@ -15,14 +15,14 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return new CirculatingSupply("CirculatingSupply", address);
   }
 
-  HEC(): Address {
-    let result = super.call("HEC", "HEC():(address)", []);
+  XYZ(): Address {
+    let result = super.call("XYZ", "XYZ():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_HEC(): ethereum.CallResult<Address> {
-    let result = super.tryCall("HEC", "HEC():(address)", []);
+  try_XYZ(): ethereum.CallResult<Address> {
+    let result = super.tryCall("XYZ", "XYZ():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -30,20 +30,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  HECCirculatingSupply(): BigInt {
+  XYZCirculatingSupply(): BigInt {
     let result = super.call(
-      "HECCirculatingSupply",
-      "HECCirculatingSupply():(uint256)",
+      "XYZCirculatingSupply",
+      "XYZCirculatingSupply():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_HECCirculatingSupply(): ethereum.CallResult<BigInt> {
+  try_XYZCirculatingSupply(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "HECCirculatingSupply",
-      "HECCirculatingSupply():(uint256)",
+      "XYZCirculatingSupply",
+      "XYZCirculatingSupply():(uint256)",
       []
     );
     if (result.reverted) {
@@ -53,20 +53,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getNonCirculatingHEC(): BigInt {
+  getNonCirculatingXYZ(): BigInt {
     let result = super.call(
-      "getNonCirculatingHEC",
-      "getNonCirculatingHEC():(uint256)",
+      "getNonCirculatingXYZ",
+      "getNonCirculatingXYZ():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_getNonCirculatingHEC(): ethereum.CallResult<BigInt> {
+  try_getNonCirculatingXYZ(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getNonCirculatingHEC",
-      "getNonCirculatingHEC():(uint256)",
+      "getNonCirculatingXYZ",
+      "getNonCirculatingXYZ():(uint256)",
       []
     );
     if (result.reverted) {
@@ -76,17 +76,17 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  initialize(_hec: Address): boolean {
+  initialize(_XYZ: Address): boolean {
     let result = super.call("initialize", "initialize(address):(bool)", [
-      ethereum.Value.fromAddress(_hec)
+      ethereum.Value.fromAddress(_XYZ)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_initialize(_hec: Address): ethereum.CallResult<boolean> {
+  try_initialize(_XYZ: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("initialize", "initialize(address):(bool)", [
-      ethereum.Value.fromAddress(_hec)
+      ethereum.Value.fromAddress(_XYZ)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -110,20 +110,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  nonCirculatingHECAddresses(param0: BigInt): Address {
+  nonCirculatingXYZAddresses(param0: BigInt): Address {
     let result = super.call(
-      "nonCirculatingHECAddresses",
-      "nonCirculatingHECAddresses(uint256):(address)",
+      "nonCirculatingXYZAddresses",
+      "nonCirculatingXYZAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
     return result[0].toAddress();
   }
 
-  try_nonCirculatingHECAddresses(param0: BigInt): ethereum.CallResult<Address> {
+  try_nonCirculatingXYZAddresses(param0: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "nonCirculatingHECAddresses",
-      "nonCirculatingHECAddresses(uint256):(address)",
+      "nonCirculatingXYZAddresses",
+      "nonCirculatingXYZAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -148,24 +148,24 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  setNonCirculatingHECAddresses(
+  setNonCirculatingXYZAddresses(
     _nonCirculatingAddresses: Array<Address>
   ): boolean {
     let result = super.call(
-      "setNonCirculatingHECAddresses",
-      "setNonCirculatingHECAddresses(address[]):(bool)",
+      "setNonCirculatingXYZAddresses",
+      "setNonCirculatingXYZAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
 
     return result[0].toBoolean();
   }
 
-  try_setNonCirculatingHECAddresses(
+  try_setNonCirculatingXYZAddresses(
     _nonCirculatingAddresses: Array<Address>
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "setNonCirculatingHECAddresses",
-      "setNonCirculatingHECAddresses(address[]):(bool)",
+      "setNonCirculatingXYZAddresses",
+      "setNonCirculatingXYZAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
     if (result.reverted) {
@@ -246,7 +246,7 @@ export class InitializeCall__Inputs {
     this._call = call;
   }
 
-  get _hec(): Address {
+  get _XYZ(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
@@ -263,20 +263,20 @@ export class InitializeCall__Outputs {
   }
 }
 
-export class SetNonCirculatingHECAddressesCall extends ethereum.Call {
-  get inputs(): SetNonCirculatingHECAddressesCall__Inputs {
-    return new SetNonCirculatingHECAddressesCall__Inputs(this);
+export class SetNonCirculatingXYZAddressesCall extends ethereum.Call {
+  get inputs(): SetNonCirculatingXYZAddressesCall__Inputs {
+    return new SetNonCirculatingXYZAddressesCall__Inputs(this);
   }
 
-  get outputs(): SetNonCirculatingHECAddressesCall__Outputs {
-    return new SetNonCirculatingHECAddressesCall__Outputs(this);
+  get outputs(): SetNonCirculatingXYZAddressesCall__Outputs {
+    return new SetNonCirculatingXYZAddressesCall__Outputs(this);
   }
 }
 
-export class SetNonCirculatingHECAddressesCall__Inputs {
-  _call: SetNonCirculatingHECAddressesCall;
+export class SetNonCirculatingXYZAddressesCall__Inputs {
+  _call: SetNonCirculatingXYZAddressesCall;
 
-  constructor(call: SetNonCirculatingHECAddressesCall) {
+  constructor(call: SetNonCirculatingXYZAddressesCall) {
     this._call = call;
   }
 
@@ -285,10 +285,10 @@ export class SetNonCirculatingHECAddressesCall__Inputs {
   }
 }
 
-export class SetNonCirculatingHECAddressesCall__Outputs {
-  _call: SetNonCirculatingHECAddressesCall;
+export class SetNonCirculatingXYZAddressesCall__Outputs {
+  _call: SetNonCirculatingXYZAddressesCall;
 
-  constructor(call: SetNonCirculatingHECAddressesCall) {
+  constructor(call: SetNonCirculatingXYZAddressesCall) {
     this._call = call;
   }
 

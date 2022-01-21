@@ -12,7 +12,7 @@
   },
   {
     "inputs": [],
-    "name": "HEC",
+    "name": "XYZ",
     "outputs": [
       {
         "internalType": "address",
@@ -25,7 +25,7 @@
   },
   {
     "inputs": [],
-    "name": "HECCirculatingSupply",
+    "name": "XYZCirculatingSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -38,7 +38,7 @@
   },
   {
     "inputs": [],
-    "name": "getNonCirculatingHEC",
+    "name": "getNonCirculatingXYZ",
     "outputs": [
       {
         "internalType": "uint256",
@@ -53,7 +53,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_hec",
+        "name": "_XYZ",
         "type": "address"
       }
     ],
@@ -89,7 +89,7 @@
         "type": "uint256"
       }
     ],
-    "name": "nonCirculatingHECAddresses",
+    "name": "nonCirculatingXYZAddresses",
     "outputs": [
       {
         "internalType": "address",
@@ -121,7 +121,7 @@
         "type": "address[]"
       }
     ],
-    "name": "setNonCirculatingHECAddresses",
+    "name": "setNonCirculatingXYZAddresses",
     "outputs": [
       {
         "internalType": "bool",

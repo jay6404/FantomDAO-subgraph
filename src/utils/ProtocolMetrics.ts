@@ -22,10 +22,10 @@ import {
     SPIRIT_HECUSDC_PAIR,
     SPIRIT_HECUSDC_PAIR_BLOCK,
     SPOOKY_HECDAI_PAIR,
-    STAKING_CONTRACT_V2_BLOCK,
-    STAKING_CONTRACT_V2,
-    SHEC_ERC20_CONTRACT_V2_BLOCK,
-    SHEC_ERC20_CONTRACT_V2,
+    // STAKING_CONTRACT_V2_BLOCK,
+    // STAKING_CONTRACT_V2,
+    // SHEC_ERC20_CONTRACT_V2_BLOCK,
+    // SHEC_ERC20_CONTRACT_V2,
     LOCKED_ADDRESS,
     MIM_ERC20_CONTRACT,
     FRAX_ERC20_CONTRACT,
@@ -92,7 +92,7 @@ function getCriculatingSupply(blockNumber: BigInt, total_supply: BigDecimal): Bi
     let circ_supply: BigDecimal
     if (blockNumber.gt(BigInt.fromString(CIRCULATING_SUPPLY_CONTRACT_BLOCK))) {
         let circulatingsupply_contract = CirculatingSupply.bind(Address.fromString(CIRCULATING_SUPPLY_CONTRACT))
-        circ_supply = toDecimal(circulatingsupply_contract.HECCirculatingSupply(), 9)
+        circ_supply = toDecimal(circulatingsupply_contract.XYZCirculatingSupply(), 9)
     } else {
         circ_supply = total_supply;
     }
@@ -104,10 +104,10 @@ function getShecSupply(blockNumber: BigInt): BigDecimal {
     let shec_contract_v1 = sHectorERC20.bind(Address.fromString(SHEC_ERC20_CONTRACT_V1))
     let shec_supply = toDecimal(shec_contract_v1.circulatingSupply(), 9)
 
-    if (blockNumber.gt(BigInt.fromString(SHEC_ERC20_CONTRACT_V2_BLOCK))) {
-        let shec_contract_v2 = sHectorERC20.bind(Address.fromString(SHEC_ERC20_CONTRACT_V2))
-        shec_supply = shec_supply.plus(toDecimal(shec_contract_v2.circulatingSupply(), 9))
-    }
+    // if (blockNumber.gt(BigInt.fromString(SHEC_ERC20_CONTRACT_V2_BLOCK))) {
+    //     let shec_contract_v2 = sHectorERC20.bind(Address.fromString(SHEC_ERC20_CONTRACT_V2))
+    //     shec_supply = shec_supply.plus(toDecimal(shec_contract_v2.circulatingSupply(), 9))
+    // }
 
     log.debug("sHEC Supply {}", [shec_supply.toString()])
     return shec_supply
@@ -281,12 +281,12 @@ function getNextHECRebase(blockNumber: BigInt): BigDecimal {
     log.debug("next_distribution v1 {}", [distribution_v1.toString()])
     let next_distribution = distribution_v1
 
-    if (blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))) {
-        let staking_contract_v2 = HectorStaking.bind(Address.fromString(STAKING_CONTRACT_V2))
-        let distribution_v2 = toDecimal(staking_contract_v2.epoch().value3, 9)
-        log.debug("next_distribution v2 {}", [distribution_v2.toString()])
-        next_distribution = next_distribution.plus(distribution_v2)
-    }
+    // if (blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))) {
+    //     let staking_contract_v2 = HectorStaking.bind(Address.fromString(STAKING_CONTRACT_V2))
+    //     let distribution_v2 = toDecimal(staking_contract_v2.epoch().value3, 9)
+    //     log.debug("next_distribution v2 {}", [distribution_v2.toString()])
+    //     next_distribution = next_distribution.plus(distribution_v2)
+    // }
 
     log.debug("next_distribution total {}", [next_distribution.toString()])
 
