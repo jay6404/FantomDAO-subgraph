@@ -15,14 +15,14 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return new CirculatingSupply("CirculatingSupply", address);
   }
 
-  XYZ(): Address {
-    let result = super.call("XYZ", "XYZ():(address)", []);
+  MAGIC(): Address {
+    let result = super.call("MAGIC", "MAGIC():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_XYZ(): ethereum.CallResult<Address> {
-    let result = super.tryCall("XYZ", "XYZ():(address)", []);
+    let result = super.tryCall("MAGIC", "MAGIC():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -32,8 +32,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   XYZCirculatingSupply(): BigInt {
     let result = super.call(
-      "XYZCirculatingSupply",
-      "XYZCirculatingSupply():(uint256)",
+      "MAGICCirculatingSupply",
+      "MAGICCirculatingSupply():(uint256)",
       []
     );
 
@@ -42,8 +42,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   try_XYZCirculatingSupply(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "XYZCirculatingSupply",
-      "XYZCirculatingSupply():(uint256)",
+      "MAGICCirculatingSupply",
+      "MAGICCirculatingSupply():(uint256)",
       []
     );
     if (result.reverted) {
@@ -55,8 +55,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   getNonCirculatingXYZ(): BigInt {
     let result = super.call(
-      "getNonCirculatingXYZ",
-      "getNonCirculatingXYZ():(uint256)",
+      "getNonCirculatingMAGIC",
+      "getNonCirculatingMAGIC():(uint256)",
       []
     );
 
@@ -65,8 +65,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   try_getNonCirculatingXYZ(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getNonCirculatingXYZ",
-      "getNonCirculatingXYZ():(uint256)",
+      "getNonCirculatingMAGIC",
+      "getNonCirculatingMAGIC():(uint256)",
       []
     );
     if (result.reverted) {
@@ -112,8 +112,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   nonCirculatingXYZAddresses(param0: BigInt): Address {
     let result = super.call(
-      "nonCirculatingXYZAddresses",
-      "nonCirculatingXYZAddresses(uint256):(address)",
+      "nonCirculatingMAGICAddresses",
+      "nonCirculatingMAGICAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
@@ -122,8 +122,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
 
   try_nonCirculatingXYZAddresses(param0: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "nonCirculatingXYZAddresses",
-      "nonCirculatingXYZAddresses(uint256):(address)",
+      "nonCirculatingMAGICAddresses",
+      "nonCirculatingMAGICAddresses(uint256):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -152,8 +152,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
     _nonCirculatingAddresses: Array<Address>
   ): boolean {
     let result = super.call(
-      "setNonCirculatingXYZAddresses",
-      "setNonCirculatingXYZAddresses(address[]):(bool)",
+      "setNonCirculatingMAGICAddresses",
+      "setNonCirculatingMAGICAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
 
@@ -164,8 +164,8 @@ export class CirculatingSupply extends ethereum.SmartContract {
     _nonCirculatingAddresses: Array<Address>
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "setNonCirculatingXYZAddresses",
-      "setNonCirculatingXYZAddresses(address[]):(bool)",
+      "setNonCirculatingMAGICAddresses",
+      "setNonCirculatingMAGICAddresses(address[]):(bool)",
       [ethereum.Value.fromAddressArray(_nonCirculatingAddresses)]
     );
     if (result.reverted) {

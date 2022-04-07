@@ -15,14 +15,14 @@ export class CirculatingSupply extends ethereum.SmartContract {
     return new CirculatingSupply("CirculatingSupply", address);
   }
 
-  XYZ(): Address {
-    let result = super.call("XYZ", "XYZ():(address)", []);
+  MAGIC(): Address {
+    let result = super.call("MAGIC", "MAGIC():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_XYZ(): ethereum.CallResult<Address> {
-    let result = super.tryCall("XYZ", "XYZ():(address)", []);
+    let result = super.tryCall("MAGIC", "MAGIC():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }

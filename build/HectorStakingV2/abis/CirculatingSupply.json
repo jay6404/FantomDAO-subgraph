@@ -12,7 +12,7 @@
   },
   {
     "inputs": [],
-    "name": "XYZ",
+    "name": "MAGIC",
     "outputs": [
       {
         "internalType": "address",

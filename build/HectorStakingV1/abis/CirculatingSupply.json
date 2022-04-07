@@ -12,7 +12,7 @@
   },
   {
     "inputs": [],
-    "name": "XYZ",
+    "name": "MAGIC",
     "outputs": [
       {
         "internalType": "address",
@@ -25,7 +25,7 @@
   },
   {
     "inputs": [],
-    "name": "XYZCirculatingSupply",
+    "name": "MAGICCirculatingSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -38,7 +38,7 @@
   },
   {
     "inputs": [],
-    "name": "getNonCirculatingXYZ",
+    "name": "getNonCirculatingMAGIC",
     "outputs": [
       {
         "internalType": "uint256",
@@ -53,7 +53,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_XYZ",
+        "name": "_MAGIC",
         "type": "address"
       }
     ],
@@ -89,7 +89,7 @@
         "type": "uint256"
       }
     ],
-    "name": "nonCirculatingXYZAddresses",
+    "name": "nonCirculatingMAGICAddresses",
     "outputs": [
       {
         "internalType": "address",
@@ -121,7 +121,7 @@
         "type": "address[]"
       }
     ],
-    "name": "setNonCirculatingXYZAddresses",
+    "name": "setNonCirculatingMAGICAddresses",
     "outputs": [
       {
         "internalType": "bool",

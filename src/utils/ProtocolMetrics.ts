@@ -1,4 +1,4 @@
-import {Address, BigDecimal, BigInt, log} from '@graphprotocol/graph-ts'
+import {Address, BigDecimal, bigInt, BigInt, log} from '@graphprotocol/graph-ts'
 import { CurveGaugeAllocator } from '../../generated/HectorStakingV1/CurveGaugeAllocator'
 import {HectorERC20} from '../../generated/HectorStakingV1/HectorERC20';
 import {sHectorERC20} from '../../generated/HectorStakingV1/sHectorERC20';
@@ -26,7 +26,7 @@ import {
     // STAKING_CONTRACT_V2,
     // SHEC_ERC20_CONTRACT_V2_BLOCK,
     // SHEC_ERC20_CONTRACT_V2,
-    LOCKED_ADDRESS,
+    // LOCKED_ADDRESS,
     MIM_ERC20_CONTRACT,
     FRAX_ERC20_CONTRACT,
     SPOOKY_HECFRAX_PAIR,
@@ -149,129 +149,136 @@ function getMV_RFV(blockNumber: BigInt): BigDecimal[] {
     let fraxERC20 = ERC20.bind(Address.fromString(FRAX_ERC20_CONTRACT))
 
     let hecdaiPair = UniswapV2Pair.bind(Address.fromString(SPOOKY_HECDAI_PAIR))
-    let hecfraxPair = UniswapV2Pair.bind(Address.fromString(SPOOKY_HECFRAX_PAIR))
-    let hecusdcPair = UniswapV2Pair.bind(Address.fromString(SPIRIT_HECUSDC_PAIR))
-    let hecgohmPair = UniswapV2Pair.bind(Address.fromString(SPIRIT_HECGOHM_PAIR))
+    // let hecfraxPair = UniswapV2Pair.bind(Address.fromString(SPOOKY_HECFRAX_PAIR))
+    // let hecusdcPair = UniswapV2Pair.bind(Address.fromString(SPIRIT_HECUSDC_PAIR))
+    // let hecgohmPair = UniswapV2Pair.bind(Address.fromString(SPIRIT_HECGOHM_PAIR))
 
     let daiBalance = daiERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let usdcBalance = usdcERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let mimBalance = mimERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let wftmBalance = wftmERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
-    let wftmValue = toDecimal(wftmBalance, 18).times(getFTMUSDRate())
+    // let wftmValue = toDecimal(wftmBalance, 18).times(getFTMUSDRate())
 
     let hecusdRate = getHECUSDRate()
 
     //HECDAI
     let hecdaiBalance = hecdaiPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
-    let hecdaiLockedBalance = hecdaiPair.balanceOf(Address.fromString(LOCKED_ADDRESS))
+    // let hecdaiLockedBalance = hecdaiPair.balanceOf(Address.fromString(LOCKED_ADDRESS))
     let hecdaiTotalLP = toDecimal(hecdaiPair.totalSupply(), 18)
     let hecdaiReserves = getHECDAIReserves(hecdaiPair)
-    let hecdaiPOL = toDecimal(hecdaiBalance.plus(hecdaiLockedBalance), 18).div(hecdaiTotalLP).times(BigDecimal.fromString("100"))
+    // let hecdaiPOL = toDecimal(hecdaiBalance.plus(hecdaiLockedBalance), 18).div(hecdaiTotalLP).times(BigDecimal.fromString("100"))
     let hecdaiValue = getPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, hecusdRate, BigDecimal.fromString('1'))
     let hecdaiRFV = getDiscountedPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, BigDecimal.fromString('1'))
 
     //HECUSDC
-    let hecusdcValue = BigDecimal.fromString('0');
-    let hecusdcRFV = BigDecimal.fromString('0')
-    let hecusdcPOL = BigDecimal.fromString('0')
-    if (blockNumber.gt(BigInt.fromString(SPIRIT_HECUSDC_PAIR_BLOCK))) {
-        let hecusdcBalance = hecusdcPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
-        let hecusdcTotalLP = toDecimal(hecusdcPair.totalSupply(), 18)
-        let hecusdcReserves = getHECUSDCReserves(hecusdcPair)
-        hecusdcPOL = toDecimal(hecusdcBalance, 18).div(hecusdcTotalLP).times(BigDecimal.fromString("100"))
-        hecusdcValue = getPairUSD(hecusdcBalance, hecusdcTotalLP, hecusdcReserves, hecusdRate, BigDecimal.fromString('1'))
-        hecusdcRFV = getDiscountedPairUSD(hecusdcBalance, hecusdcTotalLP, hecusdcReserves, BigDecimal.fromString('1'))
-    }
+    // let hecusdcValue = BigDecimal.fromString('0');
+    // let hecusdcRFV = BigDecimal.fromString('0')
+    // let hecusdcPOL = BigDecimal.fromString('0')
+    // if (blockNumber.gt(BigInt.fromString(SPIRIT_HECUSDC_PAIR_BLOCK))) {
+    //     let hecusdcBalance = hecusdcPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
+    //     let hecusdcTotalLP = toDecimal(hecusdcPair.totalSupply(), 18)
+    //     let hecusdcReserves = getHECUSDCReserves(hecusdcPair)
+    //     hecusdcPOL = toDecimal(hecusdcBalance, 18).div(hecusdcTotalLP).times(BigDecimal.fromString("100"))
+    //     hecusdcValue = getPairUSD(hecusdcBalance, hecusdcTotalLP, hecusdcReserves, hecusdRate, BigDecimal.fromString('1'))
+    //     hecusdcRFV = getDiscountedPairUSD(hecusdcBalance, hecusdcTotalLP, hecusdcReserves, BigDecimal.fromString('1'))
+    // }
 
     //HECFRAX
-    let hecfraxValue = BigDecimal.fromString('0');
-    let hecfraxRFV = BigDecimal.fromString('0')
-    let hecfraxPOL = BigDecimal.fromString('0')
-    if (blockNumber.gt(BigInt.fromString(SPOOKY_HECFRAX_PAIR_BLOCK))) {
-        let hecfraxBalance = hecfraxPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
-        let hecfraxTotalLP = toDecimal(hecfraxPair.totalSupply(), 18)
-        let hecfraxReserves = getHECFRAXReserves(hecfraxPair)
-        hecfraxPOL = toDecimal(hecfraxBalance, 18).div(hecfraxTotalLP).times(BigDecimal.fromString("100"))
-        hecfraxValue = getPairUSD(hecfraxBalance, hecfraxTotalLP, hecfraxReserves, hecusdRate, BigDecimal.fromString('1'))
-        hecfraxRFV = getDiscountedPairUSD(hecfraxBalance, hecfraxTotalLP, hecfraxReserves, BigDecimal.fromString('1'))
-    }
+    // let hecfraxValue = BigDecimal.fromString('0');
+    // let hecfraxRFV = BigDecimal.fromString('0')
+    // let hecfraxPOL = BigDecimal.fromString('0')
+    // if (blockNumber.gt(BigInt.fromString(SPOOKY_HECFRAX_PAIR_BLOCK))) {
+    //     let hecfraxBalance = hecfraxPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
+    //     let hecfraxTotalLP = toDecimal(hecfraxPair.totalSupply(), 18)
+    //     let hecfraxReserves = getHECFRAXReserves(hecfraxPair)
+    //     hecfraxPOL = toDecimal(hecfraxBalance, 18).div(hecfraxTotalLP).times(BigDecimal.fromString("100"))
+    //     hecfraxValue = getPairUSD(hecfraxBalance, hecfraxTotalLP, hecfraxReserves, hecusdRate, BigDecimal.fromString('1'))
+    //     hecfraxRFV = getDiscountedPairUSD(hecfraxBalance, hecfraxTotalLP, hecfraxReserves, BigDecimal.fromString('1'))
+    // }
 
     //HECGOHM
-    let hecgohmValue = BigDecimal.fromString("0")
-    let hecgohmRFV = BigDecimal.fromString("0")
-    let hecgohmPOL = BigDecimal.fromString('0')
-    if (blockNumber.gt(BigInt.fromString(SPIRIT_HECGOHM_PAIR_BLOCK))) {
-        let hecgohmBalance = hecgohmPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
-        let hecgohmTotalLP = toDecimal(hecgohmPair.totalSupply(), 18)
-        let hecgohmReserves = getHECGOHMReserves(hecgohmPair)
-        hecgohmPOL = toDecimal(hecgohmBalance, 18).div(hecgohmTotalLP).times(BigDecimal.fromString('100'))
-        hecgohmValue = getPairUSD(hecgohmBalance, hecgohmTotalLP, hecgohmReserves, hecusdRate, getGOHMUSDRate())
-        hecgohmRFV = getDiscountedPairUSD(hecgohmBalance, hecgohmTotalLP, hecgohmReserves, BigDecimal.fromString('48')) // NOTE: There is no way to get OHM index on other chains :(
-    }
+    // let hecgohmValue = BigDecimal.fromString("0")
+    // let hecgohmRFV = BigDecimal.fromString("0")
+    // let hecgohmPOL = BigDecimal.fromString('0')
+    // if (blockNumber.gt(BigInt.fromString(SPIRIT_HECGOHM_PAIR_BLOCK))) {
+    //     let hecgohmBalance = hecgohmPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
+    //     let hecgohmTotalLP = toDecimal(hecgohmPair.totalSupply(), 18)
+    //     let hecgohmReserves = getHECGOHMReserves(hecgohmPair)
+    //     hecgohmPOL = toDecimal(hecgohmBalance, 18).div(hecgohmTotalLP).times(BigDecimal.fromString('100'))
+    //     hecgohmValue = getPairUSD(hecgohmBalance, hecgohmTotalLP, hecgohmReserves, hecusdRate, getGOHMUSDRate())
+    //     hecgohmRFV = getDiscountedPairUSD(hecgohmBalance, hecgohmTotalLP, hecgohmReserves, BigDecimal.fromString('48')) // NOTE: There is no way to get OHM index on other chains :(
+    // }
 
-    let daiInvestments = BigDecimal.fromString('0')
-    let usdcInvestments = BigDecimal.fromString('0')
-    let investments = BigDecimal.fromString('0')
-    if (blockNumber.gt(BigInt.fromString(CURVE_GAUGE_ALLOCATOR_CONTRACT_BLOCK))) {
-        let curveGauge = CurveGaugeAllocator.bind(Address.fromString(CURVE_GAUGE_ALLOCATOR_CONTRACT))
-        daiInvestments = toDecimal(curveGauge.tokenInfo(Address.fromString(ERC20DAI_CONTRACT)).value3, 18)
-        usdcInvestments = toDecimal(curveGauge.tokenInfo(Address.fromString(USDC_ERC20_CONTRACT)).value3, 6)
-        investments = daiInvestments.plus(usdcInvestments)
-    }
+    // let daiInvestments = BigDecimal.fromString('0')
+    // let usdcInvestments = BigDecimal.fromString('0')
+    // let investments = BigDecimal.fromString('0')
+    // if (blockNumber.gt(BigInt.fromString(CURVE_GAUGE_ALLOCATOR_CONTRACT_BLOCK))) {
+    //     let curveGauge = CurveGaugeAllocator.bind(Address.fromString(CURVE_GAUGE_ALLOCATOR_CONTRACT))
+    //     daiInvestments = toDecimal(curveGauge.tokenInfo(Address.fromString(ERC20DAI_CONTRACT)).value3, 18)
+    //     usdcInvestments = toDecimal(curveGauge.tokenInfo(Address.fromString(USDC_ERC20_CONTRACT)).value3, 6)
+    //     investments = daiInvestments.plus(usdcInvestments)
+    // }
 
-    let stableValueDecimal = toDecimal(daiBalance, 18)
-        .plus(toDecimal(usdcBalance, 6))
-        .plus(toDecimal(mimBalance, 18))
-        .plus(toDecimal(fraxBalance, 18))
-        .plus(investments)
+    // let stableValueDecimal = toDecimal(daiBalance, 18)
+    //     .plus(toDecimal(usdcBalance, 6))
+    //     .plus(toDecimal(mimBalance, 18))
+    //     .plus(toDecimal(fraxBalance, 18))
+    //     .plus(investments)
 
-    let lpValue = hecdaiValue.plus(hecusdcValue).plus(hecfraxValue).plus(hecgohmValue)
-    let rfvLpValue = hecdaiRFV.plus(hecusdcRFV).plus(hecfraxRFV).plus(hecgohmRFV)
+    // let lpValue = hecdaiValue.plus(hecusdcValue).plus(hecfraxValue).plus(hecgohmValue)
+    let lpValue = hecdaiValue
+    // let rfvLpValue = hecdaiRFV.plus(hecusdcRFV).plus(hecfraxRFV).plus(hecgohmRFV)
+    let rfvLpValue = hecdaiRFV
 
-    let mv = stableValueDecimal.plus(lpValue).plus(wftmValue)
-    let rfv = stableValueDecimal.plus(rfvLpValue)
+    // let mv = stableValueDecimal.plus(lpValue).plus(wftmValue)
+    let mv = lpValue
+    // let rfv = stableValueDecimal.plus(rfvLpValue)
+    let rfv = rfvLpValue
 
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
-    log.debug("Treasury Investments {}", [investments.toString()])
+    // log.debug("Treasury Investments {}", [investments.toString()])
     log.debug("Treasury DAI value {}", [toDecimal(daiBalance, 18).toString()])
     log.debug("Treasury USDC value {}", [toDecimal(usdcBalance, 6).toString()])
     log.debug("Treasury MIM value {}", [toDecimal(mimBalance, 18).toString()])
     log.debug("Treasury FRAX value {}", [toDecimal(fraxBalance, 18).toString()])
-    log.debug("Treasury WFTM value {}", [wftmValue.toString()])
+    // log.debug("Treasury WFTM value {}", [wftmValue.toString()])
     log.debug("Treasury HEC-DAI RFV {}", [hecdaiRFV.toString()])
-    log.debug("Treasury HEC-USDC RFV {}", [hecusdcRFV.toString()])
-    log.debug("Treasury HEC-FRAX RFV {}", [hecfraxRFV.toString()])
-    log.debug("Treasury HEC-GOHM RFV {}", [hecgohmRFV.toString()])
+    // log.debug("Treasury HEC-USDC RFV {}", [hecusdcRFV.toString()])
+    // log.debug("Treasury HEC-FRAX RFV {}", [hecfraxRFV.toString()])
+    // log.debug("Treasury HEC-GOHM RFV {}", [hecgohmRFV.toString()])
 
     return [
         mv,
         rfv,
         // treasuryDaiRiskFreeValue = DAI RFV + DAI
-        hecdaiRFV.plus(toDecimal(daiBalance, 18)).plus(daiInvestments),
-        // treasuryUsdcRiskFreeValue = USDC RFV + USDC
-        hecusdcRFV.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments),
+        hecdaiRFV.plus(toDecimal(daiBalance, 18)),        
+        // treasuryUsdcRiskFreeValue = USDC RFV + USDC        
         // treasuryDaiMarketValue = DAI LP + DAI
-        hecdaiValue.plus(toDecimal(daiBalance, 18)).plus(daiInvestments),
-        // treasuryUsdcMarketValue = USDC LP + USDC
-        hecusdcValue.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments),
-        wftmValue,
-        wftmValue,
+        hecdaiValue.plus(toDecimal(daiBalance, 18)),
+        // treasuryUsdcMarketValue = USDC LP + USDC               
         toDecimal(mimBalance, 18),
         toDecimal(mimBalance, 18),
-        // treasuryFraxMarketValue = Frax LP + FRAX
-        hecfraxValue.plus(toDecimal(fraxBalance, 18)),
-        // treasuryFraxRiskFreeValue = FRAX RFV + FRAX
-        hecfraxRFV.plus(toDecimal(fraxBalance, 18)),
-        hecgohmValue,
-        hecgohmRFV,
-        // POL
-        hecdaiPOL,
-        hecusdcPOL,
-        hecfraxPOL,
+        // treasuryFraxMarketValue = Frax LP + FRAX        
+        // treasuryFraxRiskFreeValue = FRAX RFV + FRAX                
+        // POL                       
         // Investing
-        investments
+        
+        // Jay Commented Variable
+        // wftmValue,      
+        // hecfraxValue.plus(toDecimal(fraxBalance, 18)), 
+        // hecfraxRFV.plus(toDecimal(fraxBalance, 18)), 
+        // hecdaiPOL,
+        // hecfraxPOL,
+        // hecusdcRFV.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments),
+        // hecusdcValue.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments), 
+        // hecusdcPOL, 
+        // hecgohmValue,
+        // hecgohmRFV,
+        // hecdaiRFV.plus(toDecimal(daiBalance, 18)).plus(daiInvestments),
+        // hecdaiValue.plus(toDecimal(daiBalance, 18)).plus(daiInvestments),
+        // investments,
     ]
 }
 
@@ -375,6 +382,7 @@ export function updateProtocolMetrics(blockNumber: BigInt, timestamp: BigInt): v
 
     //HEC Price
     pm.hecPrice = getHECUSDRate()
+   
 
     //HEC Market Cap
     pm.marketCap = pm.hecCirculatingSupply.times(pm.hecPrice)
