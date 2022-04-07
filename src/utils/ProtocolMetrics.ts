@@ -92,7 +92,7 @@ function getCriculatingSupply(blockNumber: BigInt, total_supply: BigDecimal): Bi
     let circ_supply: BigDecimal
     if (blockNumber.gt(BigInt.fromString(CIRCULATING_SUPPLY_CONTRACT_BLOCK))) {
         let circulatingsupply_contract = CirculatingSupply.bind(Address.fromString(CIRCULATING_SUPPLY_CONTRACT))
-        circ_supply = toDecimal(circulatingsupply_contract.XYZCirculatingSupply(), 9)
+        circ_supply = toDecimal(circulatingsupply_contract.MAGICCirculatingSupply(), 9)
     } else {
         circ_supply = total_supply;
     }
