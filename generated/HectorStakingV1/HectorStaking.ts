@@ -105,14 +105,14 @@ export class HectorStaking extends ethereum.SmartContract {
     return new HectorStaking("HectorStaking", address);
   }
 
-  HEC(): Address {
-    let result = super.call("HEC", "HEC():(address)", []);
+  MAGIC(): Address {
+    let result = super.call("MAGIC", "MAGIC():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_HEC(): ethereum.CallResult<Address> {
-    let result = super.tryCall("HEC", "HEC():(address)", []);
+  try_MAGIC(): ethereum.CallResult<Address> {
+    let result = super.tryCall("MAGIC", "MAGIC():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -238,14 +238,14 @@ export class HectorStaking extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  sHEC(): Address {
-    let result = super.call("sHEC", "sHEC():(address)", []);
+  sMAGIC(): Address {
+    let result = super.call("sMAGIC", "sMAGIC():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_sHEC(): ethereum.CallResult<Address> {
-    let result = super.tryCall("sHEC", "sHEC():(address)", []);
+  try_sMAGIC(): ethereum.CallResult<Address> {
+    let result = super.tryCall("sMAGIC", "sMAGIC():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -381,11 +381,11 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _HEC(): Address {
+  get _MAGIC(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _sHEC(): Address {
+  get _sMAGIC(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 

@@ -3,12 +3,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_HEC",
+        "name": "_MAGIC",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_sHEC",
+        "name": "_sMAGIC",
         "type": "address"
       },
       {
@@ -70,7 +70,7 @@
   },
   {
     "inputs": [],
-    "name": "HEC",
+    "name": "MAGIC",
     "outputs": [
       {
         "internalType": "address",
@@ -256,7 +256,7 @@
   },
   {
     "inputs": [],
-    "name": "sHEC",
+    "name": "sMAGIC",
     "outputs": [
       {
         "internalType": "address",
@@ -270,7 +270,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum HectorStaking.CONTRACTS",
+        "internalType": "enum FantomDAOStaking.CONTRACTS",
         "name": "_contract",
         "type": "uint8"
       },

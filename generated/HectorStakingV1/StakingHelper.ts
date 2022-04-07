@@ -15,14 +15,14 @@ export class StakingHelper extends ethereum.SmartContract {
     return new StakingHelper("StakingHelper", address);
   }
 
-  HEC(): Address {
-    let result = super.call("HEC", "HEC():(address)", []);
+  MAGIC(): Address {
+    let result = super.call("MAGIC", "MAGIC():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_HEC(): ethereum.CallResult<Address> {
-    let result = super.tryCall("HEC", "HEC():(address)", []);
+  try_MAGIC(): ethereum.CallResult<Address> {
+    let result = super.tryCall("MAGIC", "MAGIC():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -67,7 +67,7 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _HEC(): Address {
+  get _MAGIC(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 }
@@ -99,10 +99,6 @@ export class StakeCall__Inputs {
 
   get _amount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _recipient(): Address {
-    return this._call.inputValues[1].value.toAddress();
   }
 }
 
