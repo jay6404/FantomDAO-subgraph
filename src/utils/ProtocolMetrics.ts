@@ -19,9 +19,10 @@ import {
     TREASURY_ADDRESS,
     USDC_ERC20_CONTRACT,
     WFTM_ERC20_CONTRACT,
-    SPIRIT_HECUSDC_PAIR,
-    SPIRIT_HECUSDC_PAIR_BLOCK,
+    // SPIRIT_HECUSDC_PAIR,
+    // SPIRIT_HECUSDC_PAIR_BLOCK,
     SPOOKY_HECDAI_PAIR,
+    // SPOOKY_HECDAI_PAIR_BLOCK,
     // STAKING_CONTRACT_V2_BLOCK,
     // STAKING_CONTRACT_V2,
     // SHEC_ERC20_CONTRACT_V2_BLOCK,
@@ -29,15 +30,15 @@ import {
     // LOCKED_ADDRESS,
     MIM_ERC20_CONTRACT,
     FRAX_ERC20_CONTRACT,
-    SPOOKY_HECFRAX_PAIR,
-    SPOOKY_HECFRAX_PAIR_BLOCK,
+    // SPOOKY_HECFRAX_PAIR,
+    // SPOOKY_HECFRAX_PAIR_BLOCK,
     CURVE_GAUGE_ALLOCATOR_CONTRACT_BLOCK,
     CURVE_GAUGE_ALLOCATOR_CONTRACT,
-    SPIRIT_HECGOHM_PAIR_BLOCK,
-    SPIRIT_HECGOHM_PAIR
+    // SPIRIT_HECGOHM_PAIR_BLOCK,
+    // SPIRIT_HECGOHM_PAIR
 } from './Constants';
 import {toDecimal} from './Decimals';
-import {getHECUSDRate, getDiscountedPairUSD, getPairUSD, getFTMUSDRate, getGOHMUSDRate} from './Price';
+import {getHECUSDRate, getDiscountedPairUSD, getPairUSD, getFTMUSDRate} from './Price';
 
 
 export function loadOrCreateProtocolMetric(blockNumber: BigInt, timestamp: BigInt): ProtocolMetric {
@@ -55,25 +56,25 @@ export function loadOrCreateProtocolMetric(blockNumber: BigInt, timestamp: BigIn
         protocolMetric.totalValueLocked = BigDecimal.fromString("0")
         protocolMetric.treasuryRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMarketValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryInvestments = BigDecimal.fromString("0")
+        // protocolMetric.treasuryInvestments = BigDecimal.fromString("0")
         protocolMetric.nextEpochRebase = BigDecimal.fromString("0")
         protocolMetric.nextDistributedHec = BigDecimal.fromString("0")
         protocolMetric.currentAPY = BigDecimal.fromString("0")
         protocolMetric.treasuryDaiRiskFreeValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryUsdcRiskFreeValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryUsdcRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryDaiMarketValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryUsdcMarketValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryUsdcMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryWFTMRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryWFTMMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMIMRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMIMMarketValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryFRAXRiskFreeValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryFRAXMarketValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryGOHMRiskFreeValue = BigDecimal.fromString("0")
-        protocolMetric.treasuryGOHMMarketValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryFRAXRiskFreeValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryFRAXMarketValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryGOHMRiskFreeValue = BigDecimal.fromString("0")
+        // protocolMetric.treasuryGOHMMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryHecDaiPOL = BigDecimal.fromString("0")
-        protocolMetric.treasuryHecUsdcPOL = BigDecimal.fromString("0")
-        protocolMetric.treasuryHecFraxPOL = BigDecimal.fromString("0")
+        // protocolMetric.treasuryHecUsdcPOL = BigDecimal.fromString("0")
+        // protocolMetric.treasuryHecFraxPOL = BigDecimal.fromString("0")
 
         protocolMetric.save()
     }
@@ -90,9 +91,12 @@ function getTotalSupply(): BigDecimal {
 
 function getCriculatingSupply(blockNumber: BigInt, total_supply: BigDecimal): BigDecimal {
     let circ_supply: BigDecimal
+    log.debug("Circulating Supply",["Jay Test start"])
     if (blockNumber.gt(BigInt.fromString(CIRCULATING_SUPPLY_CONTRACT_BLOCK))) {
         let circulatingsupply_contract = CirculatingSupply.bind(Address.fromString(CIRCULATING_SUPPLY_CONTRACT))
+        log.debug("Circulating Supply",["Jay before  start",blockNumber.toString()])
         circ_supply = toDecimal(circulatingsupply_contract.MAGICCirculatingSupply(), 9)
+        log.debug("Circulating Supply",["Jay after start",blockNumber.toString()])
     } else {
         circ_supply = total_supply;
     }
@@ -158,18 +162,32 @@ function getMV_RFV(blockNumber: BigInt): BigDecimal[] {
     let mimBalance = mimERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
     let wftmBalance = wftmERC20.balanceOf(Address.fromString(TREASURY_ADDRESS))
-    // let wftmValue = toDecimal(wftmBalance, 18).times(getFTMUSDRate())
+    let wftmValue = toDecimal(wftmBalance, 18).times(getFTMUSDRate())
 
     let hecusdRate = getHECUSDRate()
 
-    //HECDAI
+    //HECDAI Orignal Code
     let hecdaiBalance = hecdaiPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
     // let hecdaiLockedBalance = hecdaiPair.balanceOf(Address.fromString(LOCKED_ADDRESS))
     let hecdaiTotalLP = toDecimal(hecdaiPair.totalSupply(), 18)
     let hecdaiReserves = getHECDAIReserves(hecdaiPair)
-    // let hecdaiPOL = toDecimal(hecdaiBalance.plus(hecdaiLockedBalance), 18).div(hecdaiTotalLP).times(BigDecimal.fromString("100"))
+    let hecdaiPOL = toDecimal(hecdaiBalance, 18).div(hecdaiTotalLP).times(BigDecimal.fromString("100"))
     let hecdaiValue = getPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, hecusdRate, BigDecimal.fromString('1'))
     let hecdaiRFV = getDiscountedPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, BigDecimal.fromString('1'))
+    
+    
+    //HECDAI
+    // let hecdaiValue = BigDecimal.fromString('0');
+    // let hecdaiRFV = BigDecimal.fromString('0')
+    // let hecdaiPOL = BigDecimal.fromString('0')
+    // if (blockNumber.gt(BigInt.fromString(SPOOKY_HECDAI_PAIR_BLOCK))) {
+    //     let hecdaiBalance = hecdaiPair.balanceOf(Address.fromString(TREASURY_ADDRESS))
+    //     let hecdaiTotalLP = toDecimal(hecdaiPair.totalSupply(), 18)
+    //     let hecdaiReserves = getHECDAIReserves(hecdaiPair)
+    //     hecdaiPOL = toDecimal(hecdaiBalance, 18).div(hecdaiTotalLP).times(BigDecimal.fromString("100"))
+    //     hecdaiValue = getPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, hecusdRate, BigDecimal.fromString('1'))
+    //     hecdaiRFV = getDiscountedPairUSD(hecdaiBalance, hecdaiTotalLP, hecdaiReserves, BigDecimal.fromString('1'))
+    // }
 
     //HECUSDC
     // let hecusdcValue = BigDecimal.fromString('0');
@@ -232,7 +250,7 @@ function getMV_RFV(blockNumber: BigInt): BigDecimal[] {
     let rfvLpValue = hecdaiRFV
 
     // let mv = stableValueDecimal.plus(lpValue).plus(wftmValue)
-    let mv = lpValue
+    let mv = lpValue.plus(wftmValue)
     // let rfv = stableValueDecimal.plus(rfvLpValue)
     let rfv = rfvLpValue
 
@@ -253,11 +271,13 @@ function getMV_RFV(blockNumber: BigInt): BigDecimal[] {
         mv,
         rfv,
         // treasuryDaiRiskFreeValue = DAI RFV + DAI
-        hecdaiRFV.plus(toDecimal(daiBalance, 18)),        
+        hecdaiRFV.plus(toDecimal(daiBalance, 18)),
         // treasuryUsdcRiskFreeValue = USDC RFV + USDC        
         // treasuryDaiMarketValue = DAI LP + DAI
         hecdaiValue.plus(toDecimal(daiBalance, 18)),
-        // treasuryUsdcMarketValue = USDC LP + USDC               
+        // treasuryUsdcMarketValue = USDC LP + USDC     
+        wftmValue,
+        wftmValue,
         toDecimal(mimBalance, 18),
         toDecimal(mimBalance, 18),
         // treasuryFraxMarketValue = Frax LP + FRAX        
@@ -266,10 +286,10 @@ function getMV_RFV(blockNumber: BigInt): BigDecimal[] {
         // Investing
         
         // Jay Commented Variable
-        // wftmValue,      
+                
         // hecfraxValue.plus(toDecimal(fraxBalance, 18)), 
         // hecfraxRFV.plus(toDecimal(fraxBalance, 18)), 
-        // hecdaiPOL,
+        hecdaiPOL,
         // hecfraxPOL,
         // hecusdcRFV.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments),
         // hecusdcValue.plus(toDecimal(usdcBalance, 6)).plus(usdcInvestments), 
@@ -395,21 +415,24 @@ export function updateProtocolMetrics(blockNumber: BigInt, timestamp: BigInt): v
     pm.treasuryMarketValue = mv_rfv[0]
     pm.treasuryRiskFreeValue = mv_rfv[1]
     pm.treasuryDaiRiskFreeValue = mv_rfv[2]
-    pm.treasuryUsdcRiskFreeValue = mv_rfv[3]
-    pm.treasuryDaiMarketValue = mv_rfv[4]
-    pm.treasuryUsdcMarketValue = mv_rfv[5]
-    pm.treasuryWFTMRiskFreeValue = mv_rfv[6]
-    pm.treasuryWFTMMarketValue = mv_rfv[7]
-    pm.treasuryMIMRiskFreeValue = mv_rfv[8]
-    pm.treasuryMIMMarketValue = mv_rfv[9]
-    pm.treasuryFRAXMarketValue = mv_rfv[10]
-    pm.treasuryFRAXRiskFreeValue = mv_rfv[11]
-    pm.treasuryGOHMMarketValue = mv_rfv[12]
-    pm.treasuryGOHMRiskFreeValue = mv_rfv[13]
-    pm.treasuryHecDaiPOL = mv_rfv[14]
-    pm.treasuryHecUsdcPOL = mv_rfv[15]
-    pm.treasuryHecFraxPOL = mv_rfv[16]
-    pm.treasuryInvestments = mv_rfv[17]
+    // pm.treasuryUsdcRiskFreeValue = mv_rfv[3]
+    pm.treasuryDaiMarketValue = mv_rfv[3]
+    // pm.treasuryUsdcMarketValue = mv_rfv[5]
+    pm.treasuryWFTMRiskFreeValue = mv_rfv[4]
+    pm.treasuryWFTMMarketValue = mv_rfv[5]
+    pm.treasuryMIMRiskFreeValue = mv_rfv[6]
+    pm.treasuryMIMMarketValue = mv_rfv[7]
+    pm.treasuryHecDaiPOL = mv_rfv[8]
+
+    //Extra Value 
+    // pm.treasuryFRAXMarketValue = mv_rfv[10]
+    // pm.treasuryFRAXRiskFreeValue = mv_rfv[11]
+    // pm.treasuryGOHMMarketValue = mv_rfv[12]
+    // pm.treasuryGOHMRiskFreeValue = mv_rfv[13]
+    
+    // pm.treasuryHecUsdcPOL = mv_rfv[15]
+    // pm.treasuryHecFraxPOL = mv_rfv[16]
+    // pm.treasuryInvestments = mv_rfv[17]
 
     // Rebase rewards, APY, rebase
     pm.nextDistributedHec = getNextHECRebase(blockNumber)

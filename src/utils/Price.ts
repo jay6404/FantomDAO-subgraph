@@ -31,7 +31,7 @@ export function getHECUSDRate(): BigDecimal {
     let reserve0 = reserves.value0.toBigDecimal() // HEC
     let reserve1 = reserves.value1.toBigDecimal() // DAI
 
-    let hecRate = reserve1.div(reserve0).div(BIG_DECIMAL_1E9)
+    let hecRate = reserve0.div(reserve1).div(BIG_DECIMAL_1E9)
     log.debug("HEC rate {}", [hecRate.toString()])
 
     return hecRate

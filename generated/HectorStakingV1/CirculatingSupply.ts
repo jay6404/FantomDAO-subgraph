@@ -7,7 +7,8 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
+  log
 } from "@graphprotocol/graph-ts";
 
 export class CirculatingSupply extends ethereum.SmartContract {
@@ -31,13 +32,20 @@ export class CirculatingSupply extends ethereum.SmartContract {
   }
 
   MAGICCirculatingSupply(): BigInt {
-    let result = super.call(
+    let result = super.tryCall(
       "MAGICCirculatingSupply",
       "MAGICCirculatingSupply():(uint256)",
       []
     );
 
-    return result[0].toBigInt();
+    log.debug("Jay Here Error",[result.reverted.toString()]);
+    if (result.reverted) {
+      let tmp2= new BigInt(10);
+      return tmp2;
+    }
+    let value = result.value;
+    return value[0].toBigInt();
+    
   }
 
   try_MAGICCirculatingSupply(): ethereum.CallResult<BigInt> {
